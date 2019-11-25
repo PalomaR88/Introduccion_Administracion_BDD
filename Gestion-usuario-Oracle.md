@@ -1,4 +1,4 @@
-# Esquema de usuario en ORACLE
+0.# Esquema de usuario en ORACLE
 Esquema: conjunto de objetos que es propiedad de un usuario concreto. 
 
 ## Creacion, modificacion y borrado de usuarios
@@ -24,7 +24,7 @@ drop user___[CASCADE];
 ## Asignacion y revocación de privilegios
 Hay dos tipos de privilegios:
 - Privilegios sobre objetos.
-	GRANT privilegios ON propietario.objeto TO [usuario | rol | PUBLIC] [with grant option]; --> con esta opción puede darle la opción de repartir, a otro usuarios, el permiso al usuario al que se lo esta otorgando.
+	GRANT privilegios ON propietario.objeto TO [usuario | rol | PUBLIC] [with admin option]; --> con esta opción puede darle la opción de repartir, a otro usuarios, el permiso al usuario al que se lo esta otorgando.
 
 - Privilegios del sistema. Permite realizar determinadas operaciones que no están asociadas a objetos, por ejemplo crear tablas, es una accion pero no es de un objeto.
 * Create, alter, drop
@@ -58,7 +58,22 @@ Para quitárselo a un usuario: revoke nombrerol to from usuario;
 Para borrar el rol: drop role nombrerol;
 Para añadir un rol a otro: grant nombrerol to nombrerol;
 
+DBA_ROLES: todos los roles
+DBA_ROLE_PRIVS: roles concedidos a usuarios
+ROLE_ROLE_PRIVS: roles concedidos a otros roles
+ROLE_SYS_PRIVS: provolegios de sistema concedidos a los roles
+ROLE_TAB_PRIVS: privilegios sobre objetos concedidos a los roles
 
+
+# Gestión de perfiles
+Cada usuario solo puede tener un perfil. Por defecto están desahibilitados. Para habilitarlos:
+~~~
+alter system set resource_limit=TRUE
+~~~
+
+Crear perfil:
+CREATE PROFILE nombreperfil LIMIT
+{parametrorecurso | parametrocontraseña} [valor[|]]...
 
 
 
