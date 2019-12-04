@@ -130,8 +130,7 @@ is
     v_validar number:=0;
 begin
     if length(p_pswnueva)=length(p_pswvieja) then
-        raise_application_error(-20003, 'La nueva contraseña no debe tener 
-                                         la misma longitud que la anterior');
+        raise_application_error(-20003, 'La nueva contraseña no debe tener la misma longitud que la anterior');
     end if;
     for i in 1..length(p_pswnueva) loop
         ContarNumerosYLetras(substr(p_pswnueva, i,1), v_numNum, v_numLetra);
@@ -191,7 +190,7 @@ begin
     end if;
 end ContarNumerosYLetras;
 /
-
+~~~
 
 
 # Creación del perfil 
@@ -248,13 +247,10 @@ ORA-28003: fallo en la verificación de la contraseña especificada
 ORA-20003: La nueva contraseña no debe tener la misma longitud que la anterior
 ~~~
     
-alter user pruebapaloma identified by abcde12345 replace qwertyuiop789;
 
-alter user pruebapaloma identified by abcde12345m replace abcde12345;
+**8) Realiza un procedimiento llamado MostrarPrivilegiosdelRol que reciba el nombre de un rol y muestre los privilegios de sistema y los privilegios sobre objetos que lo componen.**
 
-
-    8) Realiza un procedimiento llamado MostrarPrivilegiosdelRol que reciba el nombre de un rol y muestre los privilegios de sistema y los privilegios sobre objetos que lo componen.
-
+~~~
 exec MostrarPrivileciosdelRolPaloma ('Dsvret')
 
 create or replace procedure MostrarPrivileciosdelRolPaloma (p_rol varchar2)
@@ -331,96 +327,5 @@ exception
         return -1;
 end ComprobarSiRolExiste;
 /
+~~~
 
-
-
-
-
-
-
-
-
-
-dba_roles
-
-exec MostrarPrivileciosdelRolPaloma
-
-select distinct privilege, table_name
-from role_tab_privs
-where role in (select distinct role 
-               from role_role_privs 
-               start with role='EXP_FULL_DATABASE'
-               connect by role = prior granted_role);
-
-
-
-
-
-
-
-
-select role
-from role_role_privs
-start with role='DBA'
-connect by role = prior granted_role
-
-select distinct role
-from role_role_privs
-start with role='OLAP_DBA'
-connect by role = prior granted_role
-
-*DATAPUMP_IMP_FULL_DATABASE
-*IMP_FULL_DATABASE
-*EM_EXPRESS_ALL
-*EM_EXPRESS_BASIC
-*DBA
-*DATAPUMP_EXP_FULL_DATABASE
-
-*-SELECT_CATALOG_ROLE
-*EXP_FULL_DATABASE
-*EXECUTE_CATALOG_ROLE
-
-
-select role
-from role_role_privs
-start with role='IMP_FULL_DATABASE'
-connect by role = prior granted_role
-
-
-
-select privilege from ROLE_SYS_PRIVS where role='SELECT_CATALOG_ROLE';
-
-select distinct privilege, table_name 
-from ROLE_TAB_PRIVS 
-where role in (select distinct role
-from role_role_privs
-start with role='IMP_FULL_DATABASE'
-connect by role = prior granted_role);
-
-
-select distinct privilege, table_name
-from role_tab_privs
-where (privilege, table_name) in (select distinct privilege, table_name
-from role_tab_privs
-where role= 'EXP_FULL_DATABASE')
-
-
-and (privilege, table_name) in (select distinct privilege, table_name
-from role_tab_privs
-where role= 'SELECT_CATALOG_ROLE')
-and (privilege, table_name) in (select distinct privilege, table_name
-from role_tab_privs
-where role= 'EXECUTE_CATALOG_ROLE');
-
-
-
-
-
-select * from DBA_SYS_PRIVS where grantee='CONNECT';
-DBA_TAB_PRIVS 
-
-
-
-
-
-select * from DBA_SYS_PRIVS where grantee=
