@@ -130,7 +130,8 @@ is
     v_validar number:=0;
 begin
     if length(p_pswnueva)=length(p_pswvieja) then
-        raise_application_error(-20003, 'La nueva contraseña no debe tener la misma longitud que la anterior');
+        raise_application_error(-20003, 'La nueva contraseña no debe tener 
+                                         la misma longitud que la anterior');
     end if;
     for i in 1..length(p_pswnueva) loop
         ContarNumerosYLetras(substr(p_pswnueva, i,1), v_numNum, v_numLetra);
