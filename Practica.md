@@ -9,8 +9,10 @@ Para realizar una correcta administración de los privilegios del sistema sobre 
 
 Estas opciones pueden asignarse a los roles en la propia creación del rol o con posterioridad:
 ~~~
-CREATE ROLE <nombre_rol> WITH <opcion>;
-ALTER ROLE <nombre_rol> WITH <opcion>;
+CREATE ROLE <nombre_rol> 
+       WITH <opcion>;
+ALTER ROLE <nombre_rol> 
+      WITH <opcion>;
 ~~~
 
 Algunas de estas opciones, y sus contrario, son:
@@ -32,8 +34,10 @@ Algunas de estas opciones, y sus contrario, son:
 
 La sintaxis que se utiliza para otorgar privilegios osbre una tabla en Postgrest es:
 ~~~
-GRANT <nombre_privilegio> ON <nombre_tabla> TO <nombre_rol | nombre_grupo_rol | PUBLIC> 
-      [WITH GRANT OPTION]
+GRANT <nombre_privilegio> 
+   ON <nombre_tabla> 
+   TO <nombre_rol | nombre_grupo_rol | PUBLIC> 
+   [WITH GRANT OPTION]
 ~~~
 
 Los roles que pueden otorgar estos privilegios son:
@@ -43,67 +47,77 @@ Los roles que pueden otorgar estos privilegios son:
 
 Para revocar privilegios de una tabla concreta la sintaxis es:
 ~~~
-REVOKE <nombre_privilegio> ON <nombre_tabla> FROM <nombre_rol | nombre_grupo_rol | PUBLIC>
+REVOKE <nombre_privilegio> 
+    ON <nombre_tabla> 
+    FROM <nombre_rol | nombre_grupo_rol | PUBLIC>
 ~~~
 
 También se puede eliminar la opción WITH GRANT OPTION, no el privilegio, de un rol concreto con GRANT OPTION FOR.
 
 
-    3) Averigua si existe el concepto de rol en Postgres y señala las diferencias con los roles de ORACLE.
+**3) Averigua si existe el concepto de rol en Postgres y señala las diferencias con los roles de ORACLE.**
 
 Una de las diferencias entre ORACLE y Postgres es que en el segundo no se utiliza el término usuario y solo se trabaja con roles. Mientras que en ORACLE los roles son grupos de usuarios o/y de otros roles, en Postgres los roles son los propietarios de las bases de datos y pueden estar compuestos a su vez de otros roles. 
 
 La creación de roles y la asignación de privilegios a estos comparten la misma sintaxis en ambos gestores:
 ~~~
 CREATE ROLE <nombre_rol>;
-CREATE <privilegios> ON <nombre_objeto> TO <nombre_rol>;
+CREATE <privilegios> 
+    ON <nombre_objeto> 
+    TO <nombre_rol>;
 ~~~
 
 Mientras que la asignación de roles a otros roles es igual, en Postgres no se permite asignar roles a un usuario porque no existe este término.
 
 > Asignación de un rol a un usuario en ORACLE: 
 ~~~
-GRANT <nombre_rol> TO <nombre_usuario>;
+GRANT <nombre_rol> 
+   TO <nombre_usuario>;
 ~~~
 
 > Asignación de un rol a otro rol en ORACLE y Postgres:
 ~~~
-GRANT <nombre_rol> TO <nombre_rol>;
+GRANT <nombre_rol> 
+   TO <nombre_rol>;
 ~~~
 
 Para listar los roles en ORACLE se debe consultar, en el diccionario de datos, las vistas DBA_ROLES, DBA_ROLE_PRIVS y ROLE_ROLE_PRIVS. En Postgres se utiliza \du+.
 
 
 
-    4) Averigua si existe el concepto de perfil como conjunto de límites sobre el uso de recursos o sobre la contraseña en Postgres y señala las diferencias con los perfiles de ORACLE.
+**4) Averigua si existe el concepto de perfil como conjunto de límites sobre el uso de recursos o sobre la contraseña en Postgres y señala las diferencias con los perfiles de ORACLE.**
 
 En Postgres no existe el concepto perfil porque, mientras este término en ORACLE trabaja sobre los usuarios, en Postgres todas las delimitaciones se resuelven sobre los objetos.
 
 
 
-    5) Realiza consultas al diccionario de datos de Postgres para averiguar todos los privilegios que tiene un usuario concreto.
+**5) Realiza consultas al diccionario de datos de Postgres para averiguar todos los privilegios que tiene un usuario concreto.**
 
-select 'Privilegio '||privilege_type||' en la tabla '||table_name||' del esquema '||table_schema||' de la base de datos '||table_catalog
+~~~
+select 'Privilegio '||privilege_type||
+       ' en la tabla '||table_name||
+       ' del esquema '||table_schema||
+       ' de la base de datos '||table_catalog
 from information_schema.table_privileges 
 where grantee='postgres';
+~~~
 
 
-
-    6) Realiza consultas al diccionario de datos en Postgres para averiguar qué usuarios pueden consultar una tabla concreta.
-
+**6) Realiza consultas al diccionario de datos en Postgres para averiguar qué usuarios pueden consultar una tabla concreta.**
+~~~
 select grantee
 from information_schema.table_privileges
 where table_name = 'pg_user'
 and privilege_type = 'SELECT';
+~~~
 
 
+## ORACLE:
 
-### ORACLE:
+**7) Realiza una función de verificación de contraseñas que compruebe que la contraseña difiere en más de tres caracteres de la anterior y que la longitud de la misma es diferente de la anterior. Asígnala al perfil CONTRASEÑASEGURA. Comprueba que funciona correctamente. También debe tener mínimo dos letras y mínimo dos números.**
 
-    7) Realiza una función de verificación de contraseñas que compruebe que la contraseña difiere en más de tres caracteres de la anterior y que la longitud de la misma es diferente de la anterior. Asígnala al perfil CONTRASEÑASEGURA. Comprueba que funciona correctamente. También debe tener mínimo dos letras y mínimo dos números.
-
-# Creación de la función y los procedimientos correspondientes para la verificación de la password
-
+### Creación de la función y los procedimientos correspondientes para la verificación de la password
+~~~
 create or replace function VerificacionPSW (p_usuario varchar2,
                                             p_pswnueva varchar2,
                                             p_pswvieja varchar2)
