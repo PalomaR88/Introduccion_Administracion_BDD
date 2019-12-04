@@ -1,4 +1,3 @@
-
 ### Alumno 2 (Postgres y ORACLE):
 
 ## Postgres:
@@ -29,11 +28,12 @@ Algunas de estas opciones, y sus contrario, son:
 - ADMIN: opción para indicar el rol o los roles de los formará parte con derecho a agregar a otros roles en este. 
 
 
-    2) Averigua cual es la forma de asignar y revocar privilegios sobre una tabla concreta en Postgres.
+**2) Averigua cual es la forma de asignar y revocar privilegios sobre una tabla concreta en Postgres.**
 
 La sintaxis que se utiliza para otorgar privilegios osbre una tabla en Postgrest es:
 ~~~
-GRANT <nombre_privilegio> ON <nombre_tabla> TO <nombre_rol | nombre_grupo_rol | PUBLIC> [WITH GRANT OPTION]
+GRANT <nombre_privilegio> ON <nombre_tabla> TO <nombre_rol | nombre_grupo_rol | PUBLIC> 
+      [WITH GRANT OPTION]
 ~~~
 
 Los roles que pueden otorgar estos privilegios son:
