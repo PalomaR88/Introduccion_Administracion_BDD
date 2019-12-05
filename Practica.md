@@ -32,7 +32,7 @@ Algunas de estas opciones, y sus contrario, son:
 
 **2) Averigua cual es la forma de asignar y revocar privilegios sobre una tabla concreta en Postgres.**
 
-La sintaxis que se utiliza para otorgar privilegios osbre una tabla en Postgrest es:
+La sintaxis que se utiliza para otorgar privilegios sobre una tabla en Postgrest es:
 ~~~
 GRANT <nombre_privilegio> 
    ON <nombre_tabla> 
@@ -57,12 +57,12 @@ También se puede eliminar la opción WITH GRANT OPTION, no el privilegio, de un
 
 **3) Averigua si existe el concepto de rol en Postgres y señala las diferencias con los roles de ORACLE.**
 
-Una de las diferencias entre ORACLE y Postgres es que en el segundo no se utiliza el término usuario y solo se trabaja con roles. Mientras que en ORACLE los roles son grupos de usuarios o/y de otros roles, en Postgres los roles son los propietarios de las bases de datos y pueden estar compuestos a su vez de otros roles. 
+Una de las diferencias entre ORACLE y Postgres es que en el segundo, aunque en ocasiones se utiliza el término usuario, solo se trabaja con roles. Mientras que en ORACLE los roles son grupos de usuarios o/y de otros roles, en Postgres los roles son los propietarios de las bases de datos y pueden estar compuestos a su vez de otros roles. 
 
-La creación de roles y la asignación de privilegios a estos comparten la misma sintaxis en ambos gestores:
+La creación de roles y la asignación de privilegios sobre objetos a estos comparten la misma sintaxis en ambos gestores:
 ~~~
 CREATE ROLE <nombre_rol>;
-CREATE <privilegios> 
+GRANT <privilegio> 
     ON <nombre_objeto> 
     TO <nombre_rol>;
 ~~~
@@ -81,7 +81,7 @@ GRANT <nombre_rol>
    TO <nombre_rol>;
 ~~~
 
-Para listar los roles en ORACLE se debe consultar, en el diccionario de datos, las vistas DBA_ROLES, DBA_ROLE_PRIVS y ROLE_ROLE_PRIVS. En Postgres se utiliza \du+.
+Para listar los roles, y los privilegios de estos, en ORACLE se debe consultar, en el diccionario de datos, las vistas DBA_ROLES, DBA_ROLE_PRIVS y ROLE_ROLE_PRIVS. En Postgres se utiliza \du+.
 
 
 
@@ -99,7 +99,7 @@ select 'Privilegio '||privilege_type||
        ' del esquema '||table_schema||
        ' de la base de datos '||table_catalog
 from information_schema.table_privileges 
-where grantee='postgres';
+where grantee=<nombre_rol>;
 ~~~
 
 
@@ -107,7 +107,7 @@ where grantee='postgres';
 ~~~
 select grantee
 from information_schema.table_privileges
-where table_name = 'pg_user'
+where table_name = <nombre_table>
 and privilege_type = 'SELECT';
 ~~~
 
