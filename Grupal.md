@@ -704,7 +704,7 @@ end PrivilegiosSobreProcedimientos;
 /
 ~~~
 
-POSTGRES
+**POSTGRES**
 En Postgres los usuarios no son propietarios de los objetos sino de bases de datos y esquemas. Y los objetos forman parte de los esquemas. Se ha intentado realizar este ejercicio filtrando los esquemas que pertenecen a un usuario concreto, pero solo se ha podido listar los esquemas con sus respectivos propietarios con \dn. Pero, ante la imposibilidad de filtrar la opción \dn con una select, se ha llegado a la conclusión de que no se puede realizar este ejercicio en este gestor. 
 
 
