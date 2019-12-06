@@ -420,7 +420,9 @@ is
     v_cursor c_sesiones%ROWTYPE;
 begin
     for v_cursor in c_sesiones loop
-        dbms_output.put_line('Hora: '||v_cursor.hora||'Maquina: '||v_cursor.machine||'Programa: '||v_cursor.program);
+        dbms_output.put_line('Hora: '||v_cursor.hora||
+                             'Maquina: '||v_cursor.machine||
+                             'Programa: '||v_cursor.program);
     v_numero:=v_numero+1;
     end loop;
     dbms_output.put_line('Numero de sesiones abiertas: '||v_numero);
