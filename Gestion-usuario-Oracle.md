@@ -1,4 +1,4 @@
-0.# Esquema de usuario en ORACLE
+# Esquema de usuario en ORACLE
 Esquema: conjunto de objetos que es propiedad de un usuario concreto. 
 
 ## Creacion, modificacion y borrado de usuarios
