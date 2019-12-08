@@ -1,8 +1,8 @@
 
 README.md linguist-documentation
 
-Practica.md linguist-language=plsql
-Grupal.md linguist-language=plsql
+Practica.md linguist-language=sql
+Grupal.md linguist-language=sql
 
 Fundamentos-de-Administracion-Oracle.md linguist-documentation
 Gestion-usuario-Oracle.md linguist-documentation
